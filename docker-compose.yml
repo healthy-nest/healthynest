@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: strapi_postgres
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: healthy_nest_cms_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - strapi-net
+
+  strapi:
+    build:
+      context: ./healthy_nest_cms
+      dockerfile: Dockerfile
+    container_name: strapi_app
+    ports:
+      - "1337:1337"
+    env_file:
+      - .env
+    environment:
+      DATABASE_CLIENT: postgres
+      DATABASE_NAME: healthy_nest_cms_db
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: admin
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      - postgres
+    volumes:
+      - ./healthy_nest_cms:/app
+    networks:
+      - strapi-net
+
+volumes:
+  pgdata:
+
+networks:
+  strapi-net:
