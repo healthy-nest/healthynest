@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_number_ranges",
+  "info": {
+    "displayName": "PriceRange"
+  },
+  "options": {},
+  "attributes": {
+    "PricingUnit": {
+      "type": "enumeration",
+      "required": true,
+      "default": "MONTH",
+      "enum": [
+        "HOUR",
+        "DAY",
+        "MONTH"
+      ]
+    },
+    "minimum": {
+      "type": "decimal",
+      "required": true
+    },
+    "maximum": {
+      "type": "decimal",
+      "required": true
+    }
+  },
+  "config": {}
+}

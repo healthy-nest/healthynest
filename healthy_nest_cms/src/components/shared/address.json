@@ -1,0 +1,45 @@
+{
+  "collectionName": "components_shared_addresses",
+  "info": {
+    "displayName": "Address"
+  },
+  "options": {},
+  "attributes": {
+    "Line1": {
+      "type": "text",
+      "required": true
+    },
+    "Line2": {
+      "type": "text"
+    },
+    "Locality": {
+      "type": "string"
+    },
+    "City": {
+      "type": "string",
+      "required": true
+    },
+    "State": {
+      "type": "string",
+      "required": true
+    },
+    "Country": {
+      "type": "string",
+      "required": true
+    },
+    "PostalCode": {
+      "type": "biginteger",
+      "required": true
+    },
+    "Latitude": {
+      "type": "decimal"
+    },
+    "Longitude": {
+      "type": "decimal"
+    },
+    "Landmark": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

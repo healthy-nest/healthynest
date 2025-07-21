@@ -1,0 +1,8 @@
+# Ensure consistent line endings for all files
+* text=auto
+
+# Use LF for Terraform files
+*.tf text eol=lf
+*.tfvars text eol=lf
+*.hcl text eol=lf
+*.lock.hcl text eol=lf
