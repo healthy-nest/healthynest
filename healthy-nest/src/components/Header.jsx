@@ -1,14 +1,25 @@
-import { Menu } from "lucide-react";
+import React from 'react';
+import logo from '../assets/logo.png'; // Update path as needed
 
-export default function Header() {
+const Header = () => {
   return (
-    <header className="flex items-center justify-between px-4 py-3 bg-white shadow-md">
-      <h1 className="text-lg font-semibold text-green-700 flex items-center gap-2">
-        <span className="text-xl">🌿</span> Healthy Nest
-      </h1>
-      <button className="md:hidden">
-        <Menu className="w-6 h-6 text-gray-600" />
-      </button>
+    <header className="flex justify-between items-center px-20 py-4 shadow-sm bg-white">
+      {/* Logo Section */}
+      <div className="flex items-center gap-3 text-2xl font-bold text-green-600">
+        {/*<img src={logo} alt="Logo" className="w-12 h-12 object-contain" /> */}
+        HealthyNest
+      </div>
+
+      {/* Navigation */}
+      <nav className="hidden md:flex space-x-6 text-sm text-gray-700">
+        <a href="#" className="hover:text-green-600">Home</a>
+        <a href="#" className="hover:text-green-600">Compare</a>
+        <a href="#" className="hover:text-green-600">Providers</a>
+        <a href="#" className="hover:text-green-600">About Us</a>
+        <a href="#" className="hover:text-green-600">Resources</a>
+      </nav>
     </header>
   );
-}
+};
+
+export default Header;

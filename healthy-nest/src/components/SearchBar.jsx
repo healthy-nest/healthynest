@@ -1,32 +1,55 @@
-import { Search, Filter } from "lucide-react";
+import React from 'react';
+import { FaSearch, FaSlidersH } from 'react-icons/fa';
 
-export default function SearchBar() {
+const SearchBar = () => {
   return (
-    <section className="bg-white p-4 shadow mt-4 mx-4 rounded-lg">
-      <h3 className="text-md font-semibold text-gray-700 mb-2">
-        Find Trusted Elder Care Options Near You
-      </h3>
+    <section className="relative z-10 -mt-10 px-4">
+      <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-2xl p-6 flex flex-col md:flex-row items-center gap-4">
+        {/* Area/Landmark Search */}
+        <div className="flex items-center w-full md:w-1/2 bg-gray-100 rounded-full px-4 py-2">
+          <FaSearch className="text-gray-400 mr-2" />
+          <input
+            type="text"
+            placeholder="Search by area or landmark"
+            className="bg-transparent w-full focus:outline-none text-sm"
+          />
+        </div>
 
-      <div className="flex items-center gap-2 mb-3">
-        <input
-          type="text"
-          placeholder="Search by home name, city, or area"
-          className="flex-1 border border-gray-300 rounded px-3 py-2 text-sm"
-        />
+        {/* Select City Dropdown */}
+        <div className="relative w-full max-w-xs">
+          <select className="appearance-none w-full border border-gray-300 rounded-md py-2 pl-4 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+            <option>Select City</option>
+            <option>Hyderabad</option>
+            <option>Bangalore</option>
+            <option>Chennai</option>
+          </select>
+
+          {/* Dropdown icon */}
+          <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+            <svg
+              className="w-4 h-4 text-gray-500"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
       </div>
 
-      <div className="flex flex-wrap gap-2 mb-4">
-        <span className="bg-gray-200 text-sm px-3 py-1 rounded-full">City</span>
-        <span className="bg-gray-200 text-sm px-3 py-1 rounded-full">Care Type</span>
-        <span className="bg-gray-200 text-sm px-3 py-1 rounded-full">Budget</span>
-        <span className="bg-gray-200 text-sm px-3 py-1 rounded-full flex items-center gap-1">
-          <Filter className="w-4 h-4" /> More Filters
-        </span>
-      </div>
 
-      <button className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-md shadow">
-        Show Results <span className="text-sm text-white/70">(0 homes found)</span>
-      </button>
+        {/* Advanced Filters Button */}
+        <div className="w-full md:w-auto">
+          <button className="flex items-center gap-2 border border-green-700 text-green-700 rounded-full px-5 py-2 text-sm hover:bg-green-700 hover:text-white transition">
+            <FaSlidersH />
+            Advanced Filters
+          </button>
+        </div>
+      </div>
     </section>
   );
-}
+};
+
+export default SearchBar;
