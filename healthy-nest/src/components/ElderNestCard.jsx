@@ -6,6 +6,7 @@ import {
   FaStar,
   FaCheckCircle,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const ElderCareCard = ({ data }) => {
   return (
@@ -77,9 +78,11 @@ const ElderCareCard = ({ data }) => {
           </div>
 
           {/* View Button */}
-          <button className="text-sm text-green-600 hover:underline font-medium whitespace-nowrap">
-            View →
-          </button>
+            <Link to="/healthynest/nest/:1"
+                className="text-sm text-green-600 hover:underline font-medium whitespace-nowrap"
+            >
+                View →
+            </Link>
         </div>
       </div>
     </div>

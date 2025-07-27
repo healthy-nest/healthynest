@@ -8,7 +8,7 @@ const Header = () => {
       {/* Logo Section */}
       <div className="flex items-center gap-3 text-2xl font-bold text-green-600">
         {/*<img src={logo} alt="Logo" className="w-12 h-12 object-contain" /> */}
-        <Link to="/" className="hover:text-green-600">
+        <Link to="/healthynest" className="hover:text-green-600">
           HealthyNest
         </Link>
       </div>
@@ -17,7 +17,7 @@ const Header = () => {
       <nav className="hidden md:flex space-x-6 text-sm text-gray-700">
         <Link to="/" className="hover:text-green-600">Home</Link>
         <Link to="/compare" className="hover:text-green-600">Compare</Link>
-        <Link to="/explore-nests" className="hover:text-green-600">Providers</Link>
+        <Link to="/healthynest/explore-nests" className="hover:text-green-600">Providers</Link>
         <Link to="/about" className="hover:text-green-600">About Us</Link>
         <Link to="/resources" className="hover:text-green-600">Resources</Link>
       </nav>
