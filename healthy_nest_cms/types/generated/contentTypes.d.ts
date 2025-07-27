@@ -538,7 +538,7 @@ export interface ApiElderNestElderNest extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     OwnershipType: Schema.Attribute.Enumeration<
-      ['NGO,', 'PRIVATE,', 'GOVERNMENT,', 'TRUST']
+      ['NGO', 'PRIVATE', 'GOVERNMENT', 'TRUST']
     >;
     publishedAt: Schema.Attribute.DateTime;
     Specializations: Schema.Attribute.Component<'shared.catalog-item', true>;

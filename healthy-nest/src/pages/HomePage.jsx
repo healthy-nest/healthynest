@@ -13,15 +13,12 @@ import Footer from '../components/Footer';
 const Home = () => {
   return (
     <div className="font-sans text-gray-800">
-      <Header />
       <Hero />
       <SearchBar />
       <FeaturedHomes />
       <WhyHealthyNest />
       <Categories />
       <Testimonials />
-      <CallToAction />
-      <Footer />
     </div>
   );
 };

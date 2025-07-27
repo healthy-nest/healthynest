@@ -32,9 +32,9 @@
     "OwnershipType": {
       "type": "enumeration",
       "enum": [
-        "NGO,",
-        "PRIVATE,",
-        "GOVERNMENT,",
+        "NGO",
+        "PRIVATE",
+        "GOVERNMENT",
         "TRUST"
       ]
     },

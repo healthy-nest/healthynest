@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/healthynest/', // 👈 this is crucial!
+  base: '/', // 👈 this is crucial!
   plugins: [react()],
 })
