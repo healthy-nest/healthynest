@@ -47,7 +47,7 @@ const Footer = () => {
 
       {/* Bottom row: Copyright */}
       <div className="text-center text-sm text-gray-500 pb-6">
-        © 2023 Healthy Nest. All rights reserved. Built with <span className="text-red-500">❤️</span> in India by <strong>Flyers Soft</strong>.
+        © 2023 Healthy Nest. All rights reserved. Built with <span className="text-red-500">❤️</span> in <strong>India</strong>.
       </div>
     </footer>
   );
