@@ -1,30 +1,63 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Deploy CMS
 
-# Controls when the workflow will run
 on:
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  build-and-deploy:
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+    - name: Checkout repo
+      uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+    - name: Set up SSH key
+      run: |
+        echo "$PRIVATE_KEY" > github-ec2.pem
+        chmod 600 github-ec2.pem
+      env:
+        PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+    - name: Build Docker image
+      run: |
+        docker build -t strapi-app ./healthy_nest_cms
+        docker save strapi-app | gzip > strapi-app.tar.gz
+
+    - name: Copy Docker image to EC2
+      run: |
+        scp -o StrictHostKeyChecking=no -i github-ec2.pem strapi-app.tar.gz ${USER}@${HOST}:~/strapi-app.tar.gz
+      env:
+        HOST: ${{ secrets.EC2_HOST }}
+        USER: ${{ secrets.EC2_USER }}
+
+    - name: Load and Run Docker image on EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << EOF
+          echo "✅ Connected to EC2"
+
+          echo "📦 Loading Docker image..."
+          gunzip -c strapi-app.tar.gz | docker load
+
+          echo "🧹 Cleaning up old container (if exists)..."
+          docker rm -f strapi 2>/dev/null || true
+
+          echo "🚀 Running Strapi container..."
+          docker run -d \
+            --name strapi \
+            -p 1337:1337 \
+            --restart unless-stopped \
+            -e DATABASE_USERNAME="${DB_USERNAME}" \
+            -e DATABASE_PASSWORD="${DB_PASSWORD}" \
+            -e DATABASE_NAME="${DB_NAME}" \
+            -e AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
+            -e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
+            strapi-app
+        EOF
+      env:
+        DB_USERNAME: ${{ secrets.DB_USERNAME }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        HOST: ${{ secrets.EC2_HOST }}
+        USER: ${{ secrets.EC2_USER }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
