@@ -8,7 +8,7 @@ import NestDetails from "./pages/NestDetails";
 function App() {
   return (
       <Routes>
-        <Route path="/healthynest" element={<MainLayout />}>
+        <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} /> // ✅ This renders Home at "/"
           <Route path="explore-nests" element={<ExploreNests />} />
           <Route path="advanced-filters" element={<ExploreNests />} />

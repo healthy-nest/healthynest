@@ -47,7 +47,7 @@ const SearchBar = () => {
         <div className="w-full md:w-auto">
           <button
             className="flex items-center gap-2 border border-green-700 text-green-700 rounded-full px-5 py-2 text-sm hover:bg-green-700 hover:text-white transition"
-            onClick={() => navigate("/healthynest/explore-nests")}
+            onClick={() => navigate("/explore-nests")}
           >
             <FaSlidersH />
             Advanced Filters
