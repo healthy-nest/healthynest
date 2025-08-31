@@ -586,6 +586,7 @@ export interface ApiElderNestElderNest extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     Specializations: Schema.Attribute.Component<'shared.catalog-item', true>;
+    TestField: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
