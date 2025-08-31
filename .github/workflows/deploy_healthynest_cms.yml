@@ -18,9 +18,15 @@ jobs:
       env:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
 
+    - name: List Dirs
+      run: |
+        echo "📂 Listing directories..."
+        ls -R ./healthy_nest_cms/src/api
+
     - name: Build Docker image
       run: |
-        docker build -t strapi-app ./healthy_nest_cms
+        echo "📦 Building Docker image..."
+        docker build --no-cache -t strapi-app ./healthy_nest_cms
         docker save strapi-app | gzip > strapi-app.tar.gz
 
     - name: Copy Docker image to EC2
