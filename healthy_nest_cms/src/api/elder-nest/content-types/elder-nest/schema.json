@@ -102,9 +102,6 @@
       "type": "component",
       "component": "shared.catalog-item",
       "repeatable": true
-    },
-    "TestField": {
-      "type": "string"
     }
   }
 }
