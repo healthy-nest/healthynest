@@ -8,75 +8,75 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    - name: Extract and display branch name using GITHUB_REF
-      run: echo "Current branch: ${GITHUB_REF##*/}"
+      - name: Extract and display branch name using GITHUB_REF
+        run: echo "Current branch: ${GITHUB_REF##*/}"
 
-    - name: Set up SSH key
-      run: |
-        echo "$PRIVATE_KEY" > github-ec2.pem
-        chmod 600 github-ec2.pem
-      env:
-        PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+      - name: Set up SSH key
+        run: |
+          echo "$PRIVATE_KEY" > github-ec2.pem
+          chmod 600 github-ec2.pem
+        env:
+          PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
 
-    - name: Build Docker image
-      run: |
-        docker build --no-cache -t strapi-app ./healthy_nest_cms
-        docker save strapi-app | gzip > strapi-app.tar.gz
+      - name: Build Docker image
+        run: |
+          docker build --no-cache -t strapi-app ./healthy_nest_cms
+          docker save strapi-app | gzip > strapi-app.tar.gz
 
-    - name: Copy Docker image to EC2
-      run: |
-        scp -o StrictHostKeyChecking=no -i github-ec2.pem strapi-app.tar.gz ${USER}@${HOST}:~/strapi-app.tar.gz
-      env:
-        HOST: ${{ secrets.EC2_HOST }}
-        USER: ${{ secrets.EC2_USER }}
+      - name: Copy Docker image to EC2
+        run: |
+          scp -o StrictHostKeyChecking=no -i github-ec2.pem strapi-app.tar.gz ${USER}@${HOST}:~/strapi-app.tar.gz
+        env:
+          HOST: ${{ secrets.EC2_HOST }}
+          USER: ${{ secrets.EC2_USER }}
 
-    - name: Load and Run Docker image on EC2
-      run: |
-        ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << EOF
-          echo "✅ Connected to EC2"
+      - name: Load and Run Docker image on EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOF'
+            echo "✅ Connected to EC2"
 
-          echo "📦 Loading Docker image..."
-          gunzip -c strapi-app.tar.gz | docker load
+            echo "📦 Loading Docker image..."
+            gunzip -c strapi-app.tar.gz | docker load
 
-          echo "🧹 Cleaning up old container (if exists)..."
-          docker rm -f strapi 2>/dev/null || true
+            echo "🧹 Cleaning up old container (if exists)..."
+            docker rm -f strapi 2>/dev/null || true
 
-          echo "🚀 Running Strapi container..."
-          docker run -d \
-            --name strapi \
-            --network my-app-network \
-            -p 1337:1337 \
-            --restart unless-stopped \
-            -e DATABASE_CLIENT=postgres \
-            -e DATABASE_HOST=pg-prod \
-            -e DATABASE_PORT=5432 \
-            -e DATABASE_USERNAME="${DB_USERNAME}" \
-            -e DATABASE_PASSWORD="${DB_PASSWORD}" \
-            -e DATABASE_NAME="${DB_NAME}" \
-            -e APP_KEYS="${APP_KEYS}" \
-            -e API_TOKEN_SALT="${API_TOKEN_SALT}" \
-            -e ADMIN_JWT_SECRET="${ADMIN_JWT_SECRET}" \
-            -e TRANSFER_TOKEN_SALT="${TRANSFER_TOKEN_SALT}" \
-            -e ENCRYPTION_KEY="${ENCRYPTION_KEY}" \
-            -e JWT_SECRET="${JWT_SECRET}" \
-            -e AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
-            -e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
-            strapi-app
-        EOF
-      env:
-        DB_USERNAME: ${{ secrets.DB_USERNAME }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        DB_NAME: ${{ secrets.DB_NAME }}
-        HOST: ${{ secrets.EC2_HOST }}
-        USER: ${{ secrets.EC2_USER }}
-        APP_KEYS: ${{ secrets.APP_KEYS }}
-        API_TOKEN_SALT: ${{ secrets.API_TOKEN_SALT }}
-        ADMIN_JWT_SECRET: ${{ secrets.ADMIN_JWT_SECRET }}
-        TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
-        ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
-        JWT_SECRET: ${{ secrets.JWT_SECRET }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            echo "🚀 Running Strapi container..."
+            docker run -d \
+              --name strapi \
+              --network my-app-network \
+              -p 1337:1337 \
+              --restart unless-stopped \
+              -e DATABASE_CLIENT=postgres \
+              -e DATABASE_HOST=pg-prod \
+              -e DATABASE_PORT=5432 \
+              -e DATABASE_USERNAME="${DB_USERNAME}" \
+              -e DATABASE_PASSWORD="${DB_PASSWORD}" \
+              -e DATABASE_NAME="${DB_NAME}" \
+              -e APP_KEYS="${APP_KEYS}" \
+              -e API_TOKEN_SALT="${API_TOKEN_SALT}" \
+              -e ADMIN_JWT_SECRET="${ADMIN_JWT_SECRET}" \
+              -e TRANSFER_TOKEN_SALT="${TRANSFER_TOKEN_SALT}" \
+              -e ENCRYPTION_KEY="${ENCRYPTION_KEY}" \
+              -e JWT_SECRET="${JWT_SECRET}" \
+              -e AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
+              -e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
+              strapi-app
+          EOF
+        env:
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          HOST: ${{ secrets.EC2_HOST }}
+          USER: ${{ secrets.EC2_USER }}
+          APP_KEYS: ${{ secrets.APP_KEYS }}
+          API_TOKEN_SALT: ${{ secrets.API_TOKEN_SALT }}
+          ADMIN_JWT_SECRET: ${{ secrets.ADMIN_JWT_SECRET }}
+          TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
+          ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
