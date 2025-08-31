@@ -10,11 +10,9 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-      with:
-        branch: ${{ github.ref }}
 
-    - name: Display Branch name
-      run: echo "Branch name: ${{ github.ref }}"
+    - name: Extract and display branch name using GITHUB_REF
+      run: echo "Current branch: ${GITHUB_REF##*/}"
 
     - name: Set up SSH key
       run: |
