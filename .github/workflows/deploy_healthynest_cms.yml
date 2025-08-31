@@ -20,7 +20,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t strapi-app ./healthy_nest_cms
+        docker build --no-cache -t strapi-app ./healthy_nest_cms
         docker save strapi-app | gzip > strapi-app.tar.gz
 
     - name: Copy Docker image to EC2
