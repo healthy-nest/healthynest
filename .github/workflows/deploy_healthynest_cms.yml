@@ -12,7 +12,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Extract and display branch name using GITHUB_REF
-        run: echo "Current branch: ${GITHUB_REF##*/}"
+        run: |
+          echo "Current branch: ${GITHUB_REF##*/}"
 
       - name: Set up SSH key
         run: |
