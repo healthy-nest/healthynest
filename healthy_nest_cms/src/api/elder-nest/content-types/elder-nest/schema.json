@@ -21,16 +21,21 @@
       "required": true
     },
     "EstablishedAt": {
-      "type": "date"
+      "type": "date",
+      "required": true
     },
     "MaximumCapacity": {
-      "type": "integer"
+      "type": "integer",
+      "required": true
     },
     "AvailableVacancies": {
-      "type": "integer"
+      "type": "integer",
+      "required": true,
+      "default": 0
     },
     "OwnershipType": {
       "type": "enumeration",
+      "required": true,
       "enum": [
         "NGO",
         "PRIVATE",
@@ -44,17 +49,56 @@
       "repeatable": false,
       "required": true
     },
+    "Specializations": {
+      "type": "component",
+      "component": "shared.catalog-item",
+      "repeatable": true
+    },
     "Amenities": {
       "type": "component",
       "component": "shared.catalog-item",
-      "repeatable": true
+      "repeatable": true,
+      "required": true
     },
-    "Facilities": {
+    "CareTypes": {
       "type": "component",
       "component": "shared.catalog-item",
       "repeatable": true
     },
-    "Specializations": {
+    "NestGallery": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
+    },
+    "Pricing": {
+      "type": "component",
+      "component": "shared.number-range",
+      "repeatable": false,
+      "required": true
+    },
+    "Banner": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "OnBoardedAt": {
+      "type": "date",
+      "required": true
+    },
+    "MedicalSupport": {
+      "type": "component",
+      "component": "shared.catalog-item",
+      "repeatable": true
+    },
+    "MealSupport": {
       "type": "component",
       "component": "shared.catalog-item",
       "repeatable": true

@@ -27,9 +27,9 @@ export default ({ env }) => {
         connectionString: env('DATABASE_URL=postgres://admin:admin@localhost:5432/healthy_nest_cms_db'),
         host: env('DATABASE_HOST', 'localhost'),
         port: env.int('DATABASE_PORT', 5432),
-        database: env('DATABASE_NAME', 'healthy_nest_cms_db'),
-        user: env('DATABASE_USERNAME', 'admin'),
-        password: env('DATABASE_PASSWORD', 'admin'),
+        database: env('DATABASE_NAME', 'healthynest_cms_db'),
+        user: env('DATABASE_USERNAME', 'healthynest_cms_user'),
+        password: env('DATABASE_PASSWORD'),
         ssl: env.bool('DATABASE_SSL', false) && {
           key: env('DATABASE_SSL_KEY', undefined),
           cert: env('DATABASE_SSL_CERT', undefined),
