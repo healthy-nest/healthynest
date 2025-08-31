@@ -506,6 +506,37 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCustomerLeadCustomerLead
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'customer_leads';
+  info: {
+    displayName: 'CustomerLead';
+    pluralName: 'customer-leads';
+    singularName: 'customer-lead';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Email: Schema.Attribute.Text;
+    FullName: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::customer-lead.customer-lead'
+    > &
+      Schema.Attribute.Private;
+    PhoneNumber: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiElderNestElderNest extends Struct.CollectionTypeSchema {
   collectionName: 'elder_nests';
   info: {
@@ -519,27 +550,40 @@ export interface ApiElderNestElderNest extends Struct.CollectionTypeSchema {
   attributes: {
     Address: Schema.Attribute.Component<'shared.address', false> &
       Schema.Attribute.Required;
-    Amenities: Schema.Attribute.Component<'shared.catalog-item', true>;
-    AvailableVacancies: Schema.Attribute.Integer;
+    Amenities: Schema.Attribute.Component<'shared.catalog-item', true> &
+      Schema.Attribute.Required;
+    AvailableVacancies: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<0>;
+    Banner: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
+    CareTypes: Schema.Attribute.Component<'shared.catalog-item', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     Description: Schema.Attribute.Text & Schema.Attribute.Required;
-    EstablishedAt: Schema.Attribute.Date;
-    Facilities: Schema.Attribute.Component<'shared.catalog-item', true>;
+    EstablishedAt: Schema.Attribute.Date & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::elder-nest.elder-nest'
     > &
       Schema.Attribute.Private;
-    MaximumCapacity: Schema.Attribute.Integer;
+    MaximumCapacity: Schema.Attribute.Integer & Schema.Attribute.Required;
+    MealSupport: Schema.Attribute.Component<'shared.catalog-item', true>;
+    MedicalSupport: Schema.Attribute.Component<'shared.catalog-item', true>;
     Name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+    NestGallery: Schema.Attribute.Media<'images' | 'videos', true> &
+      Schema.Attribute.Required;
+    OnBoardedAt: Schema.Attribute.Date & Schema.Attribute.Required;
     OwnershipType: Schema.Attribute.Enumeration<
       ['NGO', 'PRIVATE', 'GOVERNMENT', 'TRUST']
-    >;
+    > &
+      Schema.Attribute.Required;
+    Pricing: Schema.Attribute.Component<'shared.number-range', false> &
+      Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     Specializations: Schema.Attribute.Component<'shared.catalog-item', true>;
     updatedAt: Schema.Attribute.DateTime;
@@ -574,6 +618,30 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     siteDescription: Schema.Attribute.Text & Schema.Attribute.Required;
     siteName: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTestTest extends Struct.CollectionTypeSchema {
+  collectionName: 'tests';
+  info: {
+    displayName: 'test';
+    pluralName: 'tests';
+    singularName: 'test';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::test.test'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1093,8 +1161,10 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
+      'api::customer-lead.customer-lead': ApiCustomerLeadCustomerLead;
       'api::elder-nest.elder-nest': ApiElderNestElderNest;
       'api::global.global': ApiGlobalGlobal;
+      'api::test.test': ApiTestTest;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

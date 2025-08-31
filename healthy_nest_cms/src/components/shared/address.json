@@ -13,7 +13,8 @@
       "type": "text"
     },
     "Locality": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "City": {
       "type": "string",
@@ -31,14 +32,14 @@
       "type": "biginteger",
       "required": true
     },
-    "Latitude": {
-      "type": "decimal"
-    },
-    "Longitude": {
-      "type": "decimal"
-    },
     "Landmark": {
       "type": "text"
+    },
+    "Latitude": {
+      "type": "string"
+    },
+    "Longitude": {
+      "type": "string"
     }
   },
   "config": {}

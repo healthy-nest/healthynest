@@ -9,11 +9,11 @@ export interface SharedAddress extends Struct.ComponentSchema {
     City: Schema.Attribute.String & Schema.Attribute.Required;
     Country: Schema.Attribute.String & Schema.Attribute.Required;
     Landmark: Schema.Attribute.Text;
-    Latitude: Schema.Attribute.Decimal;
+    Latitude: Schema.Attribute.String;
     Line1: Schema.Attribute.Text & Schema.Attribute.Required;
     Line2: Schema.Attribute.Text;
-    Locality: Schema.Attribute.String;
-    Longitude: Schema.Attribute.Decimal;
+    Locality: Schema.Attribute.String & Schema.Attribute.Required;
+    Longitude: Schema.Attribute.String;
     PostalCode: Schema.Attribute.BigInteger & Schema.Attribute.Required;
     State: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -47,11 +47,13 @@ export interface SharedNumberRange extends Struct.ComponentSchema {
     displayName: 'PriceRange';
   };
   attributes: {
+    AdmissionFee: Schema.Attribute.BigInteger & Schema.Attribute.Required;
     maximum: Schema.Attribute.Decimal & Schema.Attribute.Required;
     minimum: Schema.Attribute.Decimal & Schema.Attribute.Required;
     PricingUnit: Schema.Attribute.Enumeration<['HOUR', 'DAY', 'MONTH']> &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'MONTH'>;
+    SecurityDeposit: Schema.Attribute.BigInteger & Schema.Attribute.Required;
   };
 }
 

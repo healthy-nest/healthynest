@@ -22,6 +22,14 @@
     "maximum": {
       "type": "decimal",
       "required": true
+    },
+    "SecurityDeposit": {
+      "type": "biginteger",
+      "required": true
+    },
+    "AdmissionFee": {
+      "type": "biginteger",
+      "required": true
     }
   },
   "config": {}
